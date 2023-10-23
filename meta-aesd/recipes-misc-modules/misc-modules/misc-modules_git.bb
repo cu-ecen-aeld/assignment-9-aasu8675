@@ -9,15 +9,14 @@
 # represented as "Unknown" below, you will need to check them yourself:
 #   LICENSE
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=f098732a73b5f6f3430472f5b094ffdb"
+LIC_FILES_CHKSUM = "file://../LICENSE;md5=f098732a73b5f6f3430472f5b094ffdb"
 
-SRC_URI = "git://git@github.com/cu-ecen-aeld/assignment-7-aasu8675.git;protocol=ssh;branch=master"
+SRC_URI = "git://github.com/cu-ecen-aeld/assignment-7-aasu8675.git;protocol=https;branch=master"
 SRC_URI += "file://misc-modules_init"
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
 SRCREV = "03ce4a73e6d634ed29ace5f4c0772a59c27d14e6"
-
 S = "${WORKDIR}/git/misc-modules"
 
 inherit module
@@ -56,3 +55,4 @@ do_install () {
 	install -m 0755 ${S}/hello.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
 	install -m 0755 ${S}/faulty.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
 }
+
