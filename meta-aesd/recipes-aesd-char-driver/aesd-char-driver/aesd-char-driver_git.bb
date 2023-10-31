@@ -22,14 +22,18 @@ S = "${WORKDIR}/git/aesd-char-driver"
 
 inherit module
 
-EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/aesd-char-driver"
+EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}"
 EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 
 inherit update-rc.d
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesd-char-driver_init"
 
+KERNEL_VERSION = "5.15.124-yocto-standard"
+
 FILES:${PN} += "${sysconfdir}/*"
+FILES:${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/aesdchar_load"
+FILES:${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/aesdchar_unload"
 
 do_configure () {
         :
@@ -39,8 +43,6 @@ do_compile () {
         oe_runmake
 }
 
-
-KERNEL_VERSION = "5.15.124-yocto-standard"
 
 
 do_install () {
@@ -55,10 +57,9 @@ do_install () {
         install -m 0755 ${WORKDIR}/aesd-char-driver_init ${D}${sysconfdir}/init.d
 
         install -d ${D}${base_libdir}/modules/${KERNEL_VERSION}/
-        install -m 0755 ${S}/aesdchar_unload ${D}${bindir}/
-	install -m 0755 ${S}/aesdchar_load ${D}${bindir}/
 
+	install -m 0755 ${S}/aesdchar_unload ${D}${base_libdir}/modules/${KERNEL_VERSION}/
+	install -m 0755 ${S}/aesdchar_load ${D}${base_libdir}/modules/${KERNEL_VERSION}/
 	install -m 0755 ${S}/aesdchar.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
-        
 }
      
