@@ -1,0 +1,21 @@
+# Author: Aamir Suhail Burhan
+#!/bin/sh
+
+case "$1" in
+start)
+    # Invoke insmod with all arguments we got
+    # and use a pathname, as insmod doesn't look in . by default
+    aesdchar_load || exit 1
+    ;;
+
+stop)
+    # Unload the scull driver on shutdown
+    # Invoke rmmod with all arguments we got
+    aesdchar_unload || exit 1
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
