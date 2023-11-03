@@ -1,8 +1,7 @@
+#!/bin/sh
 # Author: Aamir Suhail Burhan
 # Description: Init script to load aesd char driver
-
-#!/bin/sh
-
+#
 module=aesdchar
 device=aesdchar
 
